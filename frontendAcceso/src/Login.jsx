@@ -17,8 +17,8 @@ function Login(){
             body: JSON.stringify({email, password})
         })
         const data=await respuesta.json();
-        console.log(data);
-        guardarToken(data.token); // Guarda el token en el contexto de autenticación
+        console.log(data.user.token);
+        guardarToken(data.user.token); // Guarda el token en el contexto de autenticación
         navigate('/prueba'); // Navega a la ruta protegida después del login exitoso
     }
         
