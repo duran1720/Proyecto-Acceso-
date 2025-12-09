@@ -1,22 +1,24 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "./context/AuthContext";
 function Login(){
     
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const { guardarToken } = useAuth();
     async function guardar(e){
         e.preventDefault();
-        const respuesta= await fetch("http://localhost:4000/api/auth/login", {
+        const respuesta= await fetch("http://localhost:4000/api/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({email, password})
         })
-        const data=respuesta.json();
+        const data=await respuesta.json();
         console.log(data);
+        guardarToken(data.token); // Guarda el token en el contexto de autenticación
         navigate('/prueba'); // Navega a la ruta protegida después del login exitoso
     }
         
